@@ -6,13 +6,14 @@ if [[ $1 == "-h" || $1 == "--help" || $1 == "help" ]] ; then
 	echo "Runs ctags over the SVN repository you're currently in."
 	echo "Stores the results in 'tags' file in the root .svn directory."
 	echo ""
+	echo "NB: add ctags_for_svn.vim to your ~/.vim/plugins directory and"
+	echo "you're golden."
+	echo ""
 	echo "Author: Daniel Convissor <dconvissor@analysisandsolutions.com>"
 	exit 1
 fi
 
 # Inspired by: http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
-
-# https://github.com/szw/vim-tags/blob/master/plugin/tags.vim
 
 
 file=.svn/tags
