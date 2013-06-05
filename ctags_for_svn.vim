@@ -104,13 +104,34 @@ function! s:ExtractSvnDir(path) abort
   let path = s:shellslash(a:path)
   let fn = fnamemodify(path,':s?[\/]$??')
   let fn = fnamemodify(fn, ':p:h')
-  while isdirectory(fn . '/../.svn')
-    let fn = fnamemodify(fn, ':p:h:h')
-  endwhile
+
   if isdirectory(fn . '/.svn')
+    " Present directory contains .svn dir.
+    " Does there's one in the parent directory too?
+    while isdirectory(fn . '/../.svn')
+      " Yes, let's try again with it's parent.
+      let fn = fnamemodify(fn, ':p:h:h')
+    endwhile
     return fn . '/.svn'
+
+  else
+    " Present directory doesn't contain a .svn dir.
+    " Is there one in the parent directory?
+    while !isdirectory(fn . '/.svn')
+      " No, let's try again with it's parent directory.
+      let fn = fnamemodify(fn, ':p:h:h')
+      if fn == '/'
+        " We've reached the root directory.  Stop.
+        break
+      endif
+    endwhile
+
+    if isdirectory(fn . '/.svn')
+      return fn . '/.svn'
+    else
+      return ''
+    endif
   endif
-  return ''
 endfunction
 
 function! s:Detect(path)
