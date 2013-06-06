@@ -20,13 +20,30 @@ file=.svn/tags
 
 
 dir=`pwd`
-while [[ -d "$dir/../.svn" ]] ; do
-	dir=`dirname "$dir"`
-done
 
-if [[ ! -d "$dir/.svn" ]] ; then
-	echo "Sorry, $dir is not a SVN checkout."
-	exit 1
+if [[ -d "$dir/.svn" ]] ; then
+	# Present directory contains .svn dir.
+	# Is there one in the parent directory too?
+	while [[ -d "$dir/../.svn" ]] ; do
+		# Yes, let's try again with its parent.
+		dir=`dirname "$dir"`
+	done
+	dir="$dir/.svn"
+
+else
+	# Present directory doesn't contain a .svn dir.
+	# So we'll check parent dirs until we reach one with .svn in it or /.
+	while [[ ! -d "$dir/.svn" && $dir != '/' ]] ; do
+		# No love yet; let's go to the parent dir.
+		dir=`dirname "$dir"`
+	done
+
+	if [[ -d "$dir/.svn" ]] ; then
+		dir="$dir/.svn"
+	else
+		echo "You're not in a Subversion checkout."
+		exit 1
+	fi
 fi
 
 
