@@ -97,8 +97,8 @@ augroup END
 
 let s:abstract_prototype = {}
 
-"" }}}1
-"" Initialization {{{1
+" }}}1
+" Initialization {{{1
 
 function! s:ExtractSvnDir(path) abort
   let path = s:shellslash(a:path)
@@ -107,18 +107,18 @@ function! s:ExtractSvnDir(path) abort
 
   if isdirectory(fn . '/.svn')
     " Present directory contains .svn dir.
-    " Does there's one in the parent directory too?
+    " Is there one in the parent directory too?
     while isdirectory(fn . '/../.svn')
-      " Yes, let's try again with it's parent.
+      " Yes, let's try again with its parent.
       let fn = fnamemodify(fn, ':p:h:h')
     endwhile
     return fn . '/.svn'
 
   else
     " Present directory doesn't contain a .svn dir.
-    " Is there one in the parent directory?
+    " So we'll check parent dirs until we reach one with .svn in it or /.
     while !isdirectory(fn . '/.svn')
-      " No, let's try again with it's parent directory.
+      " No love yet; let's go to the parent dir.
       let fn = fnamemodify(fn, ':p:h:h')
       if fn == '/'
         " We've reached the root directory.  Stop.
