@@ -28,7 +28,6 @@ if [[ -d "$dir/.svn" ]] ; then
 		# Yes, let's try again with its parent.
 		dir=`dirname "$dir"`
 	done
-	dir="$dir/.svn"
 
 else
 	# Present directory doesn't contain a .svn dir.
@@ -38,9 +37,7 @@ else
 		dir=`dirname "$dir"`
 	done
 
-	if [[ -d "$dir/.svn" ]] ; then
-		dir="$dir/.svn"
-	else
+	if [[ ! -d "$dir/.svn" ]] ; then
 		echo "You're not in a Subversion checkout."
 		exit 1
 	fi
