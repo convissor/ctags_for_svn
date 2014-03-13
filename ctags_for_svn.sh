@@ -1,6 +1,6 @@
 #! /bin/bash
 
-if [[ $1 == "-h" || $1 == "--help" || $1 == "help" ]] ; then
+if [[ $1 == "-h" || $1 == "--help" ]] ; then
 	echo "Usage:  ctags-for-svn.sh"
 	echo ""
 	echo "Runs ctags over the SVN repository you're currently in."
