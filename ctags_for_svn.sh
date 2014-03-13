@@ -45,4 +45,4 @@ fi
 
 
 rm -f "$dir/$file"
-ctags --tag-relative -Rf"$dir/$file" --exclude=.svn --languages=-javascript,sql "$dir" > /dev/null 2>&1 &
+ctags --php-kinds=-v -Rf"$dir/$file" --exclude=.svn --languages=-javascript,sql "$dir" > /dev/null 2>&1 &
