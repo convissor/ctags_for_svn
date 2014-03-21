@@ -10,16 +10,18 @@ if [[ $1 == "-h" || $1 == "--help" ]] ; then
 	echo "you're golden."
 	echo ""
 	echo "Author: Daniel Convissor <dconvissor@analysisandsolutions.com>"
+	echo "https://github.com/convissor/ctags_for_svn"
+	echo ""
+	echo "Inspired by: http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html"
 	exit 1
 fi
-
-# Inspired by: http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
 
 
 file=.svn/tags
 
 
 dir=`pwd`
+
 
 if [[ -d "$dir/.svn" ]] ; then
 	# Present directory contains .svn dir.

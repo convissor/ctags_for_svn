@@ -1,8 +1,10 @@
-" ctags_for_svn.vim - Tells vim where the ctags file is in a SVN repository
-" Maintainer:  Daniel Convissor <danielc@analysisandsolutions.com>
-" Version:  0.1
+" File:  ctags_for_svn.vim
+" Description:  Tells vim where the ctags file is in a SVN repository
+" Author:  Daniel Convissor <danielc@analysisandsolutions.com>
+" Version:  0.2
 "
-" Ripped off from https://github.com/tpope/vim-fugitive/
+" Source:  https://github.com/convissor/ctags_for_svn
+" Inspiration:  https://github.com/tpope/vim-fugitive
 "
 " NB:  Use ctags_for_svn.sh to generate the ctags file for the current SVN
 " repository.
