@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -e
 
 if [[ $1 == "-h" || $1 == "--help" ]] ; then
 	echo "Usage:  ctags-for-svn.sh"
@@ -17,11 +17,7 @@ if [[ $1 == "-h" || $1 == "--help" ]] ; then
 fi
 
 
-file=.svn/tags
-
-
 dir=`pwd`
-
 
 if [[ -d "$dir/.svn" ]] ; then
 	# Present directory contains .svn dir.
@@ -45,6 +41,21 @@ else
 	fi
 fi
 
+# Temporary file name has process id appended to it.
+file_temp="$dir/.svn/tags.$$"
+file_perm="$dir/.svn/tags"
 
-rm -f "$dir/$file"
-ctags --php-kinds=-v -Rf"$dir/$file" --exclude=.svn --languages=-javascript,sql "$dir" > /dev/null 2>&1 &
+# When the script exits, quietly remove the temporary file, if any.
+trap "rm -f '$file_temp'" EXIT
+
+# Recursively parse the repository.
+# Put the output into a (temporary) file named tags.<process id>.
+# Don't parse the .svn directory.
+# Don't analyze JavaScript or SQL files.
+# Don't analyze variables in PHP files.
+# Pass along any extra arguments.
+# Then replace the permanent file with the temporary file.
+# Run this stuff in the background and direct all output to never never land.
+$(ctags -Rf"$file_temp" --exclude=.svn --languages=-javascript,sql \
+		--php-kinds=-v "$@" "$dir" \
+	&& mv "$file_temp" "$file_perm") > /dev/null 2>&1 &
