@@ -49,6 +49,7 @@ file_perm="$dir/.svn/tags"
 trap "rm -f '$file_temp'" EXIT
 
 # Recursively parse the repository.
+# Record paths relative to the tag file.
 # Put the output into a (temporary) file named tags.<process id>.
 # Don't parse the .svn directory.
 # Don't analyze JavaScript or SQL files.
@@ -56,6 +57,6 @@ trap "rm -f '$file_temp'" EXIT
 # Pass along any extra arguments.
 # Then replace the permanent file with the temporary file.
 # Run this stuff in the background and direct all output to never never land.
-$(ctags -Rf"$file_temp" --exclude=.svn --languages=-javascript,sql \
+$(ctags -Rf"$file_temp" --tag-relative --exclude=.svn --languages=-javascript,sql \
 		--php-kinds=-v "$@" "$dir" \
 	&& mv "$file_temp" "$file_perm") > /dev/null 2>&1 &
